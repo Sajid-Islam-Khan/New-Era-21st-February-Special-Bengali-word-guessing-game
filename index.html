@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ekushey</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(135deg, #f8fafc, #e9eff5);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      .container {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+      }
+      .screen {
+        display: none;
+      }
+      .active {
+        display: block;
+      }
+      h1,
+      h2 {
+        margin: 10px 0;
+        color: #333;
+      }
+      input[type="text"] {
+        padding: 12px 16px;
+        font-size: 16px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+      .button {
+        padding: 12px 24px;
+        margin: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #5a67d8;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      .button:hover {
+        background-color: #434190;
+      }
+      .option-button {
+        padding: 12px;
+        margin: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        width: 60px;
+        background-color: #edf2f7;
+        border: 2px solid #cbd5e0;
+        border-radius: 4px;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+      .option-button:hover {
+        background-color: #e2e8f0;
+        transform: scale(1.05);
+      }
+      #wordDisplay {
+        font-size: 48px;
+        letter-spacing: 8px;
+        margin: 20px 0;
+        color: #2d3748;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+      tr:nth-child(even) {
+        background-color: #f7fafc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Start Screen -->
+      <div id="start-screen" class="screen active">
+        <h1>Bengali Word Game(Ekushey Special)</h1>
+        <input type="text" id="playerNameInput" placeholder="Enter your name" />
+        <br />
+        <button id="startBtn" class="button">Start Game</button>
+        <button id="leaderboardBtn" class="button">View Leaderboard</button>
+      </div>
+
+      <!-- Game Screen -->
+      <div id="game-screen" class="screen">
+        <h2 id="scoreLevelDisplay"></h2>
+        <h1 id="wordDisplay"></h1>
+        <div id="optionsContainer"></div>
+        <div id="gameMessage" style="color: red; font-size: 20px; margin-top: 20px"></div>
+      </div>
+
+      <!-- Leaderboard Screen -->
+      <div id="leaderboard-screen" class="screen">
+        <h1>Leaderboard</h1>
+        <table id="leaderboardTable">
+          <tr>
+            <th>Player Name</th>
+            <th>High Score</th>
+          </tr>
+        </table>
+        <br />
+        <button id="backBtn" class="button">Back to Start</button>
+      </div>
+    </div>
+
+    <script>
+     
+      let playerName = "";
+      let currentScore = 0;
+      let currentLevel = 1;
+      let correctLetter = "";
+      let missingIndex = 0;
+      let currentWord = "";
+
+     
+      const words = {
+        1: [
+          "বই",
+          "কথা",
+          "খেলা",
+          "প্রেম",
+          "পানী",
+          "ফুল",
+          "বালক",
+          "বালিকা",
+          "গাছ",
+          "পাখি",
+          "মা",
+          "বাবা",
+          "ভাত",
+          "চাল",
+          "আলো",
+          "রাত",
+          "দিন",
+          "মাঠ",
+          "নদী",
+          "চোখ",
+          "হাসি",
+          "দুঃখ",
+          "মিষ্টি",
+          "সাদা",
+          "কালো",
+          "হাত",
+          "পা",
+          "লাল",
+          "নীল",
+          "সবুজ",
+          "চাঁদ",
+          "সूर্য",
+          "তারকা",
+          "বৃষ্টি",
+          "মাটি",
+          "পথ",
+          "ঝর্ণা",
+          "বৃষ্টি",
+          "শরৎ",
+          "বসন্ত",
+        ],
+        2: [
+          "বাংলা",
+          "বন্ধু",
+          "পথিক",
+          "সপ্তাহ",
+          "বিদ্যালয়",
+          "কলম",
+          "লেখা",
+          "মনে",
+          "বৃক্ষ",
+          "অরণ্য",
+          "সাগর",
+          "ছবি",
+          "সঙ্গীত",
+          "বন্ধন",
+          "সমাজ",
+          "জীবন",
+          "উৎসব",
+          "পরিবার",
+          "প্রকৃতি",
+          "স্বপ্ন",
+          "আশা",
+          "চিন্তা",
+          "সফলতা",
+          "অনুগ্রহ",
+          "নদীপাত",
+          "অবকাশ",
+          "উজ্জ্বল",
+          "মিষ্টান্ন",
+          "পরিকল্পনা",
+          "অভিনয়",
+          "নবীন",
+          "উৎসাহ",
+          "আলোচনা",
+          "সম্মিলন",
+          "প্রেরণা",
+          "সমঝোতা",
+          "আগ্রহ",
+          "অন্বেষণ",
+          "সমৃদ্ধি",
+        ],
+        3: [
+          "স্বাধীনতা",
+          "পরিকল্পনা",
+          "অভিযান",
+          "অভিজ্ঞতা",
+          "প্রজ্ঞা",
+          "দৃষ্টিভঙ্গি",
+          "প্রতিভা",
+          "উদ্ভাবন",
+          "সামঞ্জস্য",
+          "অন্বেষণ",
+          "অভিযাত্রা",
+          "সাহসিকতা",
+          "সম্মান",
+          "সৃজনশীলতা",
+          "উদারতা",
+          "পরিচিতি",
+          "উদ্দীপনা",
+          "পরিবর্তন",
+          "আবিষ্কার",
+          "চেতনা",
+          "মানসিকতা",
+          "পরামর্শ",
+          "সমবায়",
+          "প্রতিশ্রুতি",
+          "নৈপুণ্য",
+          "দায়িত্ব",
+          "উদ্যোগ",
+          "সমাজবোধ",
+          "অঙ্গীকার",
+          "পরিশ্রম",
+          "নির্ভরযোগ্য",
+          "অভিযোজিত",
+          "আবেগ",
+          "সংবেদন",
+          "প্রেরণা",
+          "দীর্ঘস্থায়ী",
+          "সফলতা",
+          "উদ্বুদ্ধ",
+          "পরিণতি",
+          "সততা",
+          "বিশ্লেষণ",
+          "উন্নতি",
+        ],
+      };
+
+      const bengaliLetters = [
+        "অ",
+        "আ",
+        "ই",
+        "ঈ",
+        "উ",
+        "ঊ",
+        "ঋ",
+        "এ",
+        "ঐ",
+        "ও",
+        "ঔ",
+        "ক",
+        "খ",
+        "গ",
+        "ঘ",
+        "ঙ",
+        "চ",
+        "ছ",
+        "জ",
+        "ঝ",
+        "ঞ",
+        "ট",
+        "ঠ",
+        "ড",
+        "ঢ",
+        "ণ",
+        "ত",
+        "থ",
+        "দ",
+        "ধ",
+        "ন",
+        "প",
+        "ফ",
+        "ব",
+        "ভ",
+        "ম",
+        "য",
+        "র",
+        "ল",
+        "শ",
+        "ষ",
+        "স",
+        "হ",
+        "ড়",
+        "ঢ়",
+        "য়",
+      ];
+
+     
+      const startScreen = document.getElementById("start-screen");
+      const gameScreen = document.getElementById("game-screen");
+      const leaderboardScreen = document.getElementById("leaderboard-screen");
+      const playerNameInput = document.getElementById("playerNameInput");
+      const scoreLevelDisplay = document.getElementById("scoreLevelDisplay");
+      const wordDisplay = document.getElementById("wordDisplay");
+      const optionsContainer = document.getElementById("optionsContainer");
+      const gameMessage = document.getElementById("gameMessage");
+      const leaderboardTable = document.getElementById("leaderboardTable");
+
+     
+      document.getElementById("startBtn").addEventListener("click", startGame);
+      document
+        .getElementById("leaderboardBtn")
+        .addEventListener("click", showLeaderboard);
+      document.getElementById("backBtn").addEventListener("click", () => {
+        switchScreen("start");
+      });
+
+    
+      function switchScreen(screenName) {
+        startScreen.classList.remove("active");
+        gameScreen.classList.remove("active");
+        leaderboardScreen.classList.remove("active");
+
+        if (screenName === "start") {
+          startScreen.classList.add("active");
+        } else if (screenName === "game") {
+          gameScreen.classList.add("active");
+        } else if (screenName === "leaderboard") {
+          leaderboardScreen.classList.add("active");
+        }
+      }
+
+      
+      function startGame() {
+        playerName = playerNameInput.value.trim();
+        if (playerName === "") {
+          alert("Please enter your name!");
+          return;
+        }
+        currentScore = 0;
+        currentLevel = 1;
+        gameMessage.innerText = "";
+        switchScreen("game");
+        nextRound();
+      }
+
+    
+      function getBengaliWord(level) {
+        let levelWords;
+        if (words[level]) {
+          levelWords = words[level];
+        } else {
+
+          levelWords = words[Object.keys(words).length];
+        }
+        const randomIndex = Math.floor(Math.random() * levelWords.length);
+        return levelWords[randomIndex];
+      }
+
+ 
+      function generateOptions(correct) {
+        let options = [correct];
+        while (options.length < 4) {
+          const randomIndex = Math.floor(Math.random() * bengaliLetters.length);
+          const randomLetter = bengaliLetters[randomIndex];
+          if (!options.includes(randomLetter)) {
+            options.push(randomLetter);
+          }
+        }
+
+        for (let i = options.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [options[i], options[j]] = [options[j], options[i]];
+        }
+        return options;
+      }
+
+  
+      function nextRound() {
+
+        scoreLevelDisplay.innerText = `Player: ${playerName} | Score: ${currentScore} | Level: ${currentLevel}`;
+
+
+        currentWord = getBengaliWord(currentLevel);
+    
+        missingIndex =
+          currentWord.length > 0
+            ? Math.floor(Math.random() * currentWord.length)
+            : 0;
+        correctLetter = currentWord.charAt(missingIndex);
+
+ 
+        let displayed = "";
+        for (let i = 0; i < currentWord.length; i++) {
+          displayed += i === missingIndex ? "_" : currentWord.charAt(i);
+        }
+        wordDisplay.innerText = displayed;
+
+      
+        const options = generateOptions(correctLetter);
+        optionsContainer.innerHTML = "";
+        options.forEach((letter) => {
+          const btn = document.createElement("button");
+          btn.className = "option-button";
+          btn.innerText = letter;
+          btn.addEventListener("click", () => checkAnswer(letter));
+          optionsContainer.appendChild(btn);
+        });
+      }
+
+      
+      function checkAnswer(selectedLetter) {
+        if (selectedLetter === correctLetter) {
+          currentScore++;
+          currentLevel++;
+ 
+          gameMessage.style.color = "green";
+          gameMessage.innerText = "Correct!";
+          setTimeout(() => {
+            gameMessage.innerText = "";
+
+            gameMessage.style.color = "red";
+            nextRound();
+          }, 500);
+        } else {
+
+          gameMessage.style.color = "red";
+          gameMessage.innerText = `Wrong! The correct letter was "${correctLetter}".`;
+          setTimeout(gameOver, 1000);
+        }
+      }
+      
+
+      function gameOver() {
+        updateLeaderboard(playerName, currentScore);
+        alert(`Game Over! Your score: ${currentScore}`);
+        switchScreen("start");
+        playerNameInput.value = "";
+      }
+
+      
+      function updateLeaderboard(name, score) {
+        let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+        
+        const existingPlayer = leaderboard.find((item) => item.name === name);
+        if (existingPlayer) {
+          if (score > existingPlayer.score) {
+            existingPlayer.score = score;
+          }
+        } else {
+          leaderboard.push({ name: name, score: score });
+        }
+        
+        leaderboard.sort((a, b) => b.score - a.score);
+        localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+      }
+
+      
+      function showLeaderboard() {
+        
+        leaderboardTable.innerHTML = `<tr>
+          <th>Player Name</th>
+          <th>High Score</th>
+        </tr>`;
+        let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+        leaderboard.forEach((entry) => {
+          const row = leaderboardTable.insertRow();
+          const cellName = row.insertCell(0);
+          const cellScore = row.insertCell(1);
+          cellName.innerText = entry.name;
+          cellScore.innerText = entry.score;
+        });
+        switchScreen("leaderboard");
+      }
+    </script>
+  </body>
+</html>
