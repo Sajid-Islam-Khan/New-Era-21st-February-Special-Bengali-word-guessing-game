@@ -104,11 +104,11 @@
     <div class="container">
       <!-- Start Screen -->
       <div id="start-screen" class="screen active">
-        <h1>Bengali Word Game(Ekushey Special)</h1>
-        <input type="text" id="playerNameInput" placeholder="Enter your name" />
+        <h1>বাংলা শব্দ খেলা (একুশে স্পেশাল)</h1>
+        <input type="text" id="playerNameInput" placeholder="আপনার নাম লিখুন" />
         <br />
-        <button id="startBtn" class="button">Start Game</button>
-        <button id="leaderboardBtn" class="button">View Leaderboard</button>
+        <button id="startBtn" class="button">খেলা শুরু</button>
+        <button id="leaderboardBtn" class="button">লিডারবোর্ড দেখুন</button>
       </div>
 
       <!-- Game Screen -->
@@ -116,25 +116,27 @@
         <h2 id="scoreLevelDisplay"></h2>
         <h1 id="wordDisplay"></h1>
         <div id="optionsContainer"></div>
-        <div id="gameMessage" style="color: red; font-size: 20px; margin-top: 20px"></div>
+        <div
+          id="gameMessage"
+          style="color: red; font-size: 20px; margin-top: 20px"
+        ></div>
       </div>
 
       <!-- Leaderboard Screen -->
       <div id="leaderboard-screen" class="screen">
-        <h1>Leaderboard</h1>
+        <h1>লিডারবোর্ড</h1>
         <table id="leaderboardTable">
           <tr>
-            <th>Player Name</th>
-            <th>High Score</th>
+            <th>খেলোয়াড়</th>
+            <th>উচ্চ স্কোর</th>
           </tr>
         </table>
         <br />
-        <button id="backBtn" class="button">Back to Start</button>
+        <button id="backBtn" class="button">শুরুর দিকে ফিরে যাও</button>
       </div>
     </div>
 
     <script>
-     
       let playerName = "";
       let currentScore = 0;
       let currentLevel = 1;
@@ -142,134 +144,362 @@
       let missingIndex = 0;
       let currentWord = "";
 
-     
       const words = {
         1: [
-          "বই",
-          "কথা",
-          "খেলা",
-          "প্রেম",
-          "পানী",
-          "ফুল",
-          "বালক",
-          "বালিকা",
-          "গাছ",
-          "পাখি",
-          "মা",
-          "বাবা",
-          "ভাত",
-          "চাল",
-          "আলো",
-          "রাত",
-          "দিন",
-          "মাঠ",
-          "নদী",
-          "চোখ",
-          "হাসি",
-          "দুঃখ",
-          "মিষ্টি",
-          "সাদা",
-          "কালো",
-          "হাত",
-          "পা",
-          "লাল",
-          "নীল",
-          "সবুজ",
-          "চাঁদ",
-          "সूर্য",
-          "তারকা",
-          "বৃষ্টি",
-          "মাটি",
-          "পথ",
-          "ঝর্ণা",
-          "বৃষ্টি",
-          "শরৎ",
-          "বসন্ত",
-        ],
-        2: [
-          "বাংলা",
-          "বন্ধু",
-          "পথিক",
-          "সপ্তাহ",
-          "বিদ্যালয়",
-          "কলম",
-          "লেখা",
-          "মনে",
-          "বৃক্ষ",
-          "অরণ্য",
-          "সাগর",
-          "ছবি",
-          "সঙ্গীত",
-          "বন্ধন",
-          "সমাজ",
-          "জীবন",
-          "উৎসব",
-          "পরিবার",
-          "প্রকৃতি",
-          "স্বপ্ন",
-          "আশা",
-          "চিন্তা",
-          "সফলতা",
-          "অনুগ্রহ",
-          "নদীপাত",
-          "অবকাশ",
-          "উজ্জ্বল",
-          "মিষ্টান্ন",
-          "পরিকল্পনা",
-          "অভিনয়",
-          "নবীন",
-          "উৎসাহ",
-          "আলোচনা",
-          "সম্মিলন",
-          "প্রেরণা",
-          "সমঝোতা",
-          "আগ্রহ",
-          "অন্বেষণ",
-          "সমৃদ্ধি",
-        ],
-        3: [
-          "স্বাধীনতা",
-          "পরিকল্পনা",
-          "অভিযান",
-          "অভিজ্ঞতা",
+          "অভ্যুদয়",
+          "অধিষ্ঠান",
+          "প্রত্যয়ন",
+          "নৈরাশ্য",
           "প্রজ্ঞা",
+          "সংযম",
           "দৃষ্টিভঙ্গি",
-          "প্রতিভা",
-          "উদ্ভাবন",
-          "সামঞ্জস্য",
-          "অন্বেষণ",
-          "অভিযাত্রা",
-          "সাহসিকতা",
-          "সম্মান",
-          "সৃজনশীলতা",
-          "উদারতা",
-          "পরিচিতি",
-          "উদ্দীপনা",
-          "পরিবর্তন",
-          "আবিষ্কার",
-          "চেতনা",
-          "মানসিকতা",
-          "পরামর্শ",
-          "সমবায়",
-          "প্রতিশ্রুতি",
-          "নৈপুণ্য",
-          "দায়িত্ব",
-          "উদ্যোগ",
-          "সমাজবোধ",
-          "অঙ্গীকার",
-          "পরিশ্রম",
-          "নির্ভরযোগ্য",
-          "অভিযোজিত",
-          "আবেগ",
-          "সংবেদন",
-          "প্রেরণা",
-          "দীর্ঘস্থায়ী",
-          "সফলতা",
-          "উদ্বুদ্ধ",
+          "দৃষ্টান্তমূলক",
+          "অপরিণামদর্শিতা",
+          "বিচক্ষণ",
+          "নির্দিষ্ট",
+          "প্রত্যাশা",
+          "অদ্বিতীয়",
+          "অভিষেক",
+          "সিদ্ধান্ত",
+          "শূন্য",
+          "গুণ",
+          "বরণ",
           "পরিণতি",
-          "সততা",
+          "গুণী",
+          "ঋণ",
+          "ঋতু",
+          "গৃহ",
+          "কৃষ্ণ",
+          "অধ্যবসায়",
+          "সংবৃত",
+          "সুদূরপ্রসারী",
+          "অপরিহার্য",
+          "বহিঃপ্রকাশ",
+          "নির্দ্বিধায়",
+          "উপেক্ষা",
+          "স্থায়িত্ব",
+          "নিরপেক্ষ",
+          "সংযত",
+          "অনুকূল",
+          "অসামান্য",
+          "দৃষ্টান্ত",
+          "দুর্বোধ্য",
+          "অবিচল",
+          "অবিচার",
+          "উৎকর্ষ",
+          "অনুশোচনা",
+          "অবক্ষয়",
+          "নিরাসক্ত",
+          "অভ্যন্তরীণ",
+          "প্রত্যুত্তর",
+          "আত্মমর্যাদা",
+          "প্রতিক্রিয়া",
+          "উদাসীন",
+          "নিঃস্বার্থ",
+          "সংশয়",
+          "সংহতি",
+          "অবিচ্ছিন্ন",
+          "অধ্যাত্ম",
+          "বহুমুখী",
+          "প্রতিফলন",
+          "অনুপ্রেরণা",
+          "অনধিকার",
+          "প্রত্যাবর্তন",
+          "সংশোধন",
+          "নিরীক্ষণ",
+          "প্রশংসনীয়",
+          "অন্তর্নিহিত",
+          "প্রতিদ্বন্দ্বিতা",
+          "সমর্পণ",
+          "বিনিময়",
+          "উপস্থাপন",
+          "নিঃশেষ",
+          "অধিকারভ্রষ্ট",
+          "অন্তর্দৃষ্টি",
+          "প্রতিবন্ধকতা",
+          "সীমাবদ্ধতা",
           "বিশ্লেষণ",
-          "উন্নতি",
+          "পরিব্যাপ্ত",
+          "সুনির্দিষ্ট",
+          "নির্মোহ",
+          "নির্যাস",
+          "নির্ভরযোগ্য",
+          "নৈপুণ্য",
+          "সংবেদনশীল",
+          "উপযোগী",
+          "শুদ্ধাচার",
+          "বিনীত",
+          "সংলগ্ন",
+          "পরিপূর্ণতা",
+          "সংযোজিত",
+          "প্রতিপালন",
+          "অবসাদ",
+          "বিস্মৃত",
+          "নির্দয়",
+          "প্রত্যাশিত",
+          "অনুরণন",
+          "ব্যঞ্জনাময়",
+          "সমন্বয়",
+          "আভাস",
+          "পরম্পরা",
+          "প্রাঞ্জল",
+          "স্থিরতা",
+          "নীতিনির্ধারণ",
+          "সুবিন্যস্ত",
+          "আত্মবিশ্বাস",
+          "সংযমী",
+          "নির্লিপ্ত",
+          "অনিবার্য",
+          "সুগম",
+          "সুসংগত",
+          "অনুগ্রহ",
+          "নিষ্কলুষ",
+          "পরাভূত",
+          "প্রতিনিধিত্ব",
+          "অভিজ্ঞতাসম্পন্ন",
+          "পারস্পরিক",
+          "প্রাতিষ্ঠানিক",
+          "অধ্যবসায়ী",
+          "প্রত্যাখ্যান",
+          "অভিযোজন",
+          "সর্বাধিকার",
+          "নিরূপণযোগ্য",
+          "প্রতিশ্রুতিবদ্ধ",
+          "অন্তর্বর্তীকালীন",
+          "প্রতিষ্ঠানসমূহ",
+          "স্বাধীনতাপ্রাপ্তি",
+          "অনুসন্ধিৎসু",
+          "পরিচালনাগত",
+          "প্রাথমিকীকরণ",
+          "অধিকারপ্রাপ্ত",
+          "সমালোচনামূলক",
+          "নিয়ন্ত্রণাধীন",
+          "প্রতিবেদনমূলক",
+          "আনুষ্ঠানিকতা",
+          "প্রতিনিধিমূলক",
+          "সহযোগিতামূলক",
+          "অধিগ্রহণযোগ্য",
+          "প্রতিরোধমূলক",
+          "অন্তর্নিহিত",
+          "প্রজ্ঞাবান",
+          "স্বাধিকার",
+          "নিষ্ক্রিয়তা",
+          "প্রত্যাবর্তন",
+          "আত্মসাৎকরণ",
+          "প্রতিষ্ঠাপন",
+          "সহানুভূতি",
+          "অধীনস্থ",
+          "প্রতিরোধী",
+          "অনুপ্রেরণা",
+          "প্রতিফলন",
+          "সমাজতন্ত্র",
+          "নির্ধারণ",
+          "প্রতিবেশী",
+          "আন্তর্জাতিক",
+          "প্রতিযোগিতা",
+          "সহযোগিতা",
+          "অধিকার",
+          "প্রতিশ্রুতি",
+          "অনুগামী",
+          "প্রতিক্রিয়া",
+          "সমালোচনা",
+          "নির্ভরতা",
+          "প্রতিবেদন",
+          "আত্মীয়তা",
+          "প্রশাসনিক",
+          "সহনশীলতা",
+          "অধিবাসী",
+          "প্রতিপালন",
+          "অনুসন্ধান",
+          "প্রতিবাদ",
+          "সমাবেশ",
+          "নির্মাণ",
+          "প্রতিবন্ধক",
+          "আধ্যাত্মিক",
+          "প্রশংসনীয়",
+          "সহমর্মিতা",
+          "অধিষ্ঠান",
+          "প্রতিপক্ষ",
+          "অনুশীলন",
+          "প্রতিবিম্ব",
+          "সমাধান",
+          "নির্বাচন",
+          "প্রতিভাস",
+          "আনুগত্য",
+          "প্রশস্তি",
+          "সহযাত্রী",
+          "অধিবেশন",
+          "প্রতিপত্তি",
+          "অনুস্মরণ",
+          "প্রতিভা",
+          "সমাপ্তি",
+          "নির্বাসন",
+          "প্রতিভূ",
+          "আন্দোলন",
+          "প্রশমন",
+          "সহচর",
+          "অধিসূচনা",
+          "প্রতিমা",
+          "অনুষ্ঠান",
+          "প্রতিমূর্তি",
+          "সমারোহ",
+          "নির্বিঘ্ন",
+          "প্রতিযোগী",
+          "আপত্তিজনক",
+          "প্রশ্নবোধক",
+          "সহধর্মিণী",
+          "অধীক্ষক",
+          "প্রতিরূপ",
+          "অনুকরণ",
+          "প্রতিযোগ",
+          "সমাবর্তন",
+          "নির্বিকার",
+          "প্রতিলিপি",
+          "আবশ্যকীয়",
+          "প্রসঙ্গক্রমে",
+          "সহপাঠী",
+          "অধ্যক্ষ",
+          "প্রতিশোধ",
+          "অনুকূল",
+          "প্রতিশ্রুত",
+          "সমাবেশী",
+          "নির্বিবাদ",
+          "প্রতিষেধক",
+          "আবরণ",
+          "প্রসন্নতা",
+          "সহবাস",
+          "অধ্যয়ন",
+          "প্রতিষ্ঠা",
+          "অনুগ্রহ",
+          "প্রতিসম",
+          "সমাহার",
+          "নির্বোধ",
+          "প্রতিহত",
+          "আবেগপ্রবণ",
+          "প্রসাধন",
+          "সহভাগী",
+          "অধ্যবসায়",
+          "প্রতীক্ষা",
+          "অনুচ্চারিত",
+          "প্রতিসাম্য",
+          "সমীকরণ",
+          "নির্মল",
+          "প্রতীচী",
+          "আবেদন",
+          "প্রসারণ",
+          "সহমত",
+          "অধ্যাপক",
+          "প্রতীতি",
+          "অনুজ",
+          "প্রতিস্পর্ধী",
+          "সমীক্ষা",
+          "নির্যাতন",
+          "প্রতীপ",
+          "আবির্ভাব",
+          "প্রস্তাব",
+          "সহযাত্রা",
+          "অধ্যাহার",
+          "প্রতীয়মান",
+          "অনুতাপ",
+          "প্রতিহিংসা",
+          "সমুচ্চয়",
+          "নির্লজ্জ",
+          "প্রতেক",
+          "আভিজাত্য",
+          "প্রস্তুতি",
+          "সহৃদয়",
+          "অধ্যুষিত",
+          "প্রত্যক্ষ",
+          "অনুদান",
+          "প্রতিহার",
+          "সমুদ্র",
+          "নির্লিপ্ত",
+          "প্রত্যঙ্গ",
+          "আমন্ত্রণ",
+          "প্রস্ফুটন",
+          "সহোদর",
+          "অধীর",
+          "প্রত্যয়",
+          "অনুপম",
+          "প্রহরী",
+          "সম্পত্তি",
+          "নির্লেপ",
+          "প্রত্যাখ্যান",
+          "আমলাতন্ত্র",
+          "প্রহসন",
+          "সহোদরা",
+          "অধৈর্য",
+          "প্রত্যাদেশ",
+          "অনুপস্থিত",
+          "প্রহার",
+          "সম্পর্ক",
+          "নির্বংশ",
+          "প্রত্যাশা",
+          "আরক্তিম",
+          "প্রাকৃতিক",
+          "সংকল্প",
+          "অনঙ্গ",
+          "প্রত্যুত্তর",
+          "অনুপ্রাস",
+          "প্রাঙ্গণ",
+          "সম্প্রদান",
+          "নিশ্চয়",
+          "প্রত্যেক",
+          "আরণ্যক",
+          "প্রাচীন",
+          "সংকীর্ণ",
+          "অনধিকার",
+          "প্রথা",
+          "অনুবাদ",
+          "প্রাচীর",
+          "সম্প্রদায়",
+          "নিশ্চল",
+          "প্রদক্ষিণ",
+          "আরাধনা",
+          "প্রাজ্ঞ",
+          "সংক্রান্তি",
+          "অনধীন",
+          "প্রদর্শন",
+          "অনুভব",
+          "প্রাণঘাতী",
+          "সম্প্রীতি",
+          "নিশ্চিত",
+          "প্রদাহ",
+          "আরোগ্য",
+          "প্রাণবন্ত",
+          "সংক্ষিপ্ত",
+          "অনন্ত",
+          "প্রদীপ",
+          "অনুমতি",
+          "প্রাণী",
+          "সম্বন্ধ",
+          "নিশ্চিন্ত",
+          "প্রদীপ্ত",
+          "আরোপণ",
+          "প্রাথমিক",
+          "সংগঠন",
+          "অনন্য",
+          "প্রদেশ",
+          "অনুমান",
+          "প্রাদুর্ভাব",
+          "সম্বোধন",
+          "নিষিদ্ধ",
+          "প্রধান",
+          "আলঙ্কারিক",
+          "প্রাধান্য",
+          "সংগ্রহ",
+          "অনপেক্ষ",
+          "প্রপঞ্চ",
+          "অনুযোগ",
+          "প্রান্তর",
+          "সম্ভব",
+          "নিষ্কণ্টক",
+          "প্রবক্তা",
+          "আলম্বন",
+          "প্রাপ্তি",
+          "সংঘাত",
+          "অনভিজ্ঞ",
+          "প্রবণতা",
         ],
       };
 
@@ -322,7 +552,6 @@
         "য়",
       ];
 
-     
       const startScreen = document.getElementById("start-screen");
       const gameScreen = document.getElementById("game-screen");
       const leaderboardScreen = document.getElementById("leaderboard-screen");
@@ -333,7 +562,6 @@
       const gameMessage = document.getElementById("gameMessage");
       const leaderboardTable = document.getElementById("leaderboardTable");
 
-     
       document.getElementById("startBtn").addEventListener("click", startGame);
       document
         .getElementById("leaderboardBtn")
@@ -342,7 +570,6 @@
         switchScreen("start");
       });
 
-    
       function switchScreen(screenName) {
         startScreen.classList.remove("active");
         gameScreen.classList.remove("active");
@@ -357,11 +584,10 @@
         }
       }
 
-      
       function startGame() {
         playerName = playerNameInput.value.trim();
         if (playerName === "") {
-          alert("Please enter your name!");
+          alert("দয়া করে আপনার নাম লিখুন!");
           return;
         }
         currentScore = 0;
@@ -371,20 +597,17 @@
         nextRound();
       }
 
-    
       function getBengaliWord(level) {
         let levelWords;
         if (words[level]) {
           levelWords = words[level];
         } else {
-
           levelWords = words[Object.keys(words).length];
         }
         const randomIndex = Math.floor(Math.random() * levelWords.length);
         return levelWords[randomIndex];
       }
 
- 
       function generateOptions(correct) {
         let options = [correct];
         while (options.length < 4) {
@@ -402,28 +625,23 @@
         return options;
       }
 
-  
       function nextRound() {
-
-        scoreLevelDisplay.innerText = `Player: ${playerName} | Score: ${currentScore} | Level: ${currentLevel}`;
-
+        scoreLevelDisplay.innerText = `খেলোয়াড়: ${playerName} | স্কোর: ${currentScore} | লেভেল: ${currentLevel}`;
 
         currentWord = getBengaliWord(currentLevel);
-    
+
         missingIndex =
           currentWord.length > 0
             ? Math.floor(Math.random() * currentWord.length)
             : 0;
         correctLetter = currentWord.charAt(missingIndex);
 
- 
         let displayed = "";
         for (let i = 0; i < currentWord.length; i++) {
           displayed += i === missingIndex ? "_" : currentWord.charAt(i);
         }
         wordDisplay.innerText = displayed;
 
-      
         const options = generateOptions(correctLetter);
         optionsContainer.innerHTML = "";
         options.forEach((letter) => {
@@ -435,14 +653,13 @@
         });
       }
 
-      
       function checkAnswer(selectedLetter) {
         if (selectedLetter === correctLetter) {
           currentScore++;
           currentLevel++;
- 
+
           gameMessage.style.color = "green";
-          gameMessage.innerText = "Correct!";
+          gameMessage.innerText = "সঠিক!";
           setTimeout(() => {
             gameMessage.innerText = "";
 
@@ -450,25 +667,22 @@
             nextRound();
           }, 500);
         } else {
-
           gameMessage.style.color = "red";
-          gameMessage.innerText = `Wrong! The correct letter was "${correctLetter}".`;
+          gameMessage.innerText = `ভুল! সঠিক অক্ষর ছিল "${correctLetter}".`;
           setTimeout(gameOver, 1000);
         }
       }
-      
 
       function gameOver() {
         updateLeaderboard(playerName, currentScore);
-        alert(`Game Over! Your score: ${currentScore}`);
+        alert(`গেম ওভার! আপনার স্কোর: ${currentScore}`);
         switchScreen("start");
         playerNameInput.value = "";
       }
 
-      
       function updateLeaderboard(name, score) {
         let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-        
+
         const existingPlayer = leaderboard.find((item) => item.name === name);
         if (existingPlayer) {
           if (score > existingPlayer.score) {
@@ -477,17 +691,15 @@
         } else {
           leaderboard.push({ name: name, score: score });
         }
-        
+
         leaderboard.sort((a, b) => b.score - a.score);
         localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
       }
 
-      
       function showLeaderboard() {
-        
         leaderboardTable.innerHTML = `<tr>
-          <th>Player Name</th>
-          <th>High Score</th>
+          <th>খেলোয়াড়ের নাম</th>
+          <th>উচ্চ স্কোর</th>
         </tr>`;
         let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
         leaderboard.forEach((entry) => {
