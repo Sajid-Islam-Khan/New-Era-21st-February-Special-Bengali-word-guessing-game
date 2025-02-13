@@ -30,18 +30,6 @@
         width: 90%;
         max-width: 400px;
       }
-      .green-line {
-        position: fixed;
-        top: 50%; /* Vertically center the line */
-        left: 50%; /* Horizontally center the line */
-        width: 2px; /* Thin line */
-        height: 100%; /* Full height of the page */
-        background-color: #90ee90; /* Light green color */
-        z-index: 1000;
-        transform: translate(-50%, -50%); /* Adjust the centering */
-        display: block; /* Make sure the line is visible */
-      }
-
       .screen {
         display: none;
       }
@@ -723,12 +711,6 @@
         });
         switchScreen("leaderboard");
       }
-      setTimeout(() => {
-        const greenLine = document.createElement("div");
-        greenLine.className = "green-line";
-        document.body.appendChild(greenLine);
-        greenLine.style.display = "block"; // Make the line visible
-      }, 4000); // 4 seconds delay
     </script>
   </body>
 </html>
