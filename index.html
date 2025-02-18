@@ -13,7 +13,6 @@
       }
       body {
         font-family: "Roboto", sans-serif;
-        background: linear-gradient(135deg, #f8fafc, #e9eff5);
         margin: 0;
         padding: 0;
         display: flex;
@@ -21,14 +20,57 @@
         justify-content: center;
         min-height: 100vh;
       }
+
+      /* Desktop/Large Screen Background */
+      @media screen and (min-width: 1024px) {
+        body {
+          background: linear-gradient(135deg, #f8fafc, #e9eff5);
+          background-image: url("images/bg.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+      }
+
+      /* Tablet Background */
+      @media screen and (min-width: 768px) and (max-width: 1023px) {
+        body {
+          background: linear-gradient(45deg, #e6f2ff, #b3d9ff);
+          background-image: url("images/tab.jpg");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+      }
+
+      /* Phone Background */
+      @media screen and (max-width: 767px) {
+        body {
+          background: linear-gradient(90deg, #fff5e6, #ffcc80);
+          background-image: url("images/phn.jpg");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          min-height: 100vh;
+          overflow-x: hidden;
+        }
+      }
       .container {
-        background: #fff;
+        background-image: url("images/main.png");
+        background-size: cover;
+        background-position: center;
+        aspect-ratio: 1/1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         padding: 30px;
         text-align: center;
-        width: 90%;
-        max-width: 400px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
       }
       .screen {
         display: none;
@@ -42,12 +84,38 @@
         color: #333;
       }
       input[type="text"] {
-        padding: 12px 16px;
-        font-size: 16px;
-        width: 100%;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        font-size: 14px;
+        width: 80%;
+        border: 2px solid #54caa7;
+
         margin-bottom: 20px;
+      }
+      .player-input {
+        padding: 7px 7px;
+
+        border-radius: 10px;
+
+        outline: none;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 8px rgba(90, 216, 168, 0.2);
+        backdrop-filter: blur(4px);
+        color: #2c3e50;
+        margin: 10px 0;
+      }
+      .player-input:focus {
+        border-color: #61c7b1;
+        box-shadow: 0 0 15px rgba(90, 216, 168, 0.4);
+        transform: translateY(-2px);
+      }
+      .player-input::placeholder {
+        color: #95a5a6;
+        font-style: italic;
+        opacity: 0.8;
+      }
+      .player-input:hover {
+        border-color: #61c7b1;
+        box-shadow: 0 6px 12px rgba(90, 216, 168, 0.3);
       }
       .button {
         padding: 12px 24px;
@@ -65,22 +133,51 @@
       }
       .option-button {
         padding: 12px;
-        margin: 10px;
+        margin: 5px;
         font-size: 24px;
         cursor: pointer;
         width: 60px;
-        background-color: #edf2f7;
-        border: 2px solid #cbd5e0;
-        border-radius: 4px;
-        transition: background-color 0.3s, transform 0.2s;
+        background: linear-gradient(45deg, #e1faef, #faf7e9);
+        border: 2px solid #5ad8a8;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        color: rgb(5, 66, 33);
+        box-shadow: 0 4px 15px rgba(59, 246, 215, 0.3);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+        /* animation: float 3s ease-in-out infinite; */
       }
       .option-button:hover {
-        background-color: #e2e8f0;
-        transform: scale(1.05);
+        transform: translateY(-3px) rotate(5deg);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        animation: buttonPulse 1s infinite;
+      }
+      @keyframes buttonPulse {
+        0% {
+          transform: scale(1) rotate(5deg);
+        }
+        50% {
+          transform: scale(1.05) rotate(5deg);
+        }
+        100% {
+          transform: scale(1) rotate(5deg);
+        }
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
       }
       #wordDisplay {
-        font-size: 48px;
-        letter-spacing: 8px;
+        font-size: 30px;
+        letter-spacing: 1px;
         margin: 20px 0;
         color: #2d3748;
       }
@@ -98,33 +195,454 @@
       tr:nth-child(even) {
         background-color: #f7fafc;
       }
+
+      .game-heading {
+        padding: 5px;
+        width: 250px;
+        margin: 20px auto;
+        background: linear-gradient(
+          45deg,
+          rgba(90, 216, 132, 0.9),
+          rgba(65, 144, 111, 0.85)
+        );
+        /* padding: 5px; */
+        border-radius: 10px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 1.2rem;
+        /* letter-spacing: 2px; */
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+      @keyframes glow {
+        from {
+          box-shadow: 0 0 10px #5ad8a8;
+        }
+        to {
+          box-shadow: 0 0 20px #61c7b1;
+        }
+      }
+
+      /* From Uiverse.io by barisdogansutcu */
+      .start-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 0 10px;
+        color: rgb(66, 53, 8);
+        /* text-shadow: 2px 2px rgb(116, 116, 116); */
+        text-transform: uppercase;
+        cursor: pointer;
+        border: solid 2px rgb(71, 55, 9);
+        letter-spacing: 1px;
+        font-weight: 600;
+        font-size: 17px;
+        background-color: hsl(49deg 98% 60%);
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease;
+      }
+
+      .start-btn:active {
+        transform: scale(0.9);
+        transition: all 100ms ease;
+      }
+
+      .start-btn svg {
+        transition: all 0.5s ease;
+        z-index: 2;
+      }
+
+      .play {
+        transition: all 0.5s ease;
+        transition-delay: 300ms;
+      }
+
+      .start-btn:hover svg {
+        transform: scale(3) translate(50%);
+      }
+
+      .now {
+        position: absolute;
+        left: 0;
+        transform: translateX(-100%);
+        transition: all 0.5s ease;
+        z-index: 2;
+      }
+
+      .start-btn:hover .now {
+        transform: translateX(10px);
+        transition-delay: 300ms;
+      }
+
+      .start-btn:hover .play {
+        transform: translateX(200%);
+        transition-delay: 300ms;
+      }
+
+      /* From Uiverse.io by Li-Deheng */
+      .btn-conteiner {
+        display: flex;
+        justify-content: center;
+        --color-text: #ffffff;
+        --color-background: linear-gradient(45deg, #ff135a, #ff4081, #e45486);
+        --color-outline: #ff145b80;
+        --color-shadow: #00000080;
+      }
+
+      .btn-content {
+        display: flex;
+        align-items: center;
+        padding: 0px 10px;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--color-text);
+        background: var(--color-background);
+        transition: 1s;
+        border-radius: 12px;
+        box-shadow: 0 0 0.2em 0 var(--color-background);
+      }
+
+      .btn-content:hover,
+      .btn-content:focus {
+        transition: 0.5s;
+        -webkit-animation: btn-content 1s;
+        animation: btn-content 1s;
+        outline: 0.1em solid transparent;
+        outline-offset: 0.2em;
+        box-shadow: 0 0 0.4em 0 var(--color-background);
+      }
+
+      .btn-content .icon-arrow {
+        transition: 0.5s;
+        margin-right: 0px;
+        transform: scale(0.6);
+      }
+
+      .btn-content:hover .icon-arrow {
+        transition: 0.5s;
+        margin-right: 15px;
+      }
+
+      .icon-arrow {
+        width: 20px;
+        margin-left: 15px;
+        position: relative;
+        top: 6%;
+      }
+
+      /* SVG */
+      #arrow-icon-one {
+        transition: 0.4s;
+        transform: translateX(-60%);
+      }
+
+      #arrow-icon-two {
+        transition: 0.5s;
+        transform: translateX(-30%);
+      }
+
+      .btn-content:hover #arrow-icon-three {
+        animation: color_anim 1s infinite 0.2s;
+      }
+
+      .btn-content:hover #arrow-icon-one {
+        transform: translateX(0%);
+        animation: color_anim 1s infinite 0.6s;
+      }
+
+      .btn-content:hover #arrow-icon-two {
+        transform: translateX(0%);
+        animation: color_anim 1s infinite 0.4s;
+      }
+
+      /* SVG animations */
+      @keyframes color_anim {
+        0% {
+          fill: white;
+        }
+
+        50% {
+          fill: var(--color-background);
+        }
+
+        100% {
+          fill: white;
+        }
+      }
+
+      /* Button animations */
+      @-webkit-keyframes btn-content {
+        0% {
+          outline: 0.2em solid var(--color-background);
+          outline-offset: 0;
+        }
+      }
+
+      @keyframes btn-content {
+        0% {
+          outline: 0.2em solid var(--color-background);
+          outline-offset: 0;
+        }
+      }
+
+      #scoreLevelDisplay {
+        position: relative;
+        align-items: center;
+        width: auto;
+        padding: 10px;
+        color: white;
+      }
+      .player-section {
+        margin-right: 20px;
+        position: absolute;
+        top: -155px;
+        left: -100px;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 11px 12px;
+        border-radius: 15px;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2),
+          0 0 15px rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.4s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .player-section:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 16px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .stats-section {
+        margin-left: 20px;
+        position: absolute;
+        top: -155px;
+        right: -100px;
+        background: rgba(255, 255, 255, 0.192);
+        padding: 11px 12px;
+        border-radius: 15px;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2),
+          0 0 15px rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.4s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .stats-section:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 16px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.2);
+      }
+      /* leader board design */
+      #leaderboardTable {
+        margin-top: 20px;
+        /* width: 80%; */
+        /* margin: 20px auto; */
+        border-collapse: collapse;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      #leaderboardTable th,
+      #leaderboardTable td {
+        padding: 15px;
+        text-align: center;
+        color: #053618;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      #leaderboardTable th {
+        background: rgba(255, 255, 255, 0.3);
+        font-size: 1em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 20px;
+        color: #0c532a;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      #leaderboardTable tr {
+        transition: all 0.3s ease;
+      }
+
+      #leaderboardTable tr:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.02);
+      }
+
+      #leaderboardTable tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .screen h1 {
+        color: #ffffff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        to {
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <!-- Start Screen -->
       <div id="start-screen" class="screen active">
-        <h1>বাংলা শব্দ খেলা (একুশে স্পেশাল)</h1>
-        <input type="text" id="playerNameInput" placeholder="আপনার নাম লিখুন" />
+        <h1 class="game-heading">একুশে স্পেশাল শব্দ খেলা</h1>
+        <style></style>
+        <input
+          type="text"
+          id="playerNameInput"
+          class="player-input"
+          placeholder="আপনার নাম লিখুন"
+        />
         <br />
-        <button id="startBtn" class="button">খেলা শুরু</button>
-        <button id="leaderboardBtn" class="button">লিডারবোর্ড দেখুন</button>
-      </div>
 
+        <div style="display: flex; flex-direction: row; gap: 20px">
+          <button class="start-btn" id="startBtn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 36 36"
+              width="36px"
+              height="36px"
+            >
+              <rect width="36" height="36" x="0" y="0" fill="#fdd835"></rect>
+              <path
+                fill="#e53935"
+                d="M38.67,42H11.52C11.27,40.62,11,38.57,11,36c0-5,0-11,0-11s1.44-7.39,3.22-9.59 c1.67-2.06,2.76-3.48,6.78-4.41c3-0.7,7.13-0.23,9,1c2.15,1.42,3.37,6.67,3.81,11.29c1.49-0.3,5.21,0.2,5.5,1.28 C40.89,30.29,39.48,38.31,38.67,42z"
+              ></path>
+              <path
+                fill="#b71c1c"
+                d="M39.02,42H11.99c-0.22-2.67-0.48-7.05-0.49-12.72c0.83,4.18,1.63,9.59,6.98,9.79 c3.48,0.12,8.27,0.55,9.83-2.45c1.57-3,3.72-8.95,3.51-15.62c-0.19-5.84-1.75-8.2-2.13-8.7c0.59,0.66,3.74,4.49,4.01,11.7 c0.03,0.83,0.06,1.72,0.08,2.66c4.21-0.15,5.93,1.5,6.07,2.35C40.68,33.85,39.8,38.9,39.02,42z"
+              ></path>
+              <path
+                fill="#212121"
+                d="M35,27.17c0,3.67-0.28,11.2-0.42,14.83h-2C32.72,38.42,33,30.83,33,27.17 c0-5.54-1.46-12.65-3.55-14.02c-1.65-1.08-5.49-1.48-8.23-0.85c-3.62,0.83-4.57,1.99-6.14,3.92L15,16.32 c-1.31,1.6-2.59,6.92-3,8.96v10.8c0,2.58,0.28,4.61,0.54,5.92H10.5c-0.25-1.41-0.5-3.42-0.5-5.92l0.02-11.09 c0.15-0.77,1.55-7.63,3.43-9.94l0.08-0.09c1.65-2.03,2.96-3.63,7.25-4.61c3.28-0.76,7.67-0.25,9.77,1.13 C33.79,13.6,35,22.23,35,27.17z"
+              ></path>
+              <path
+                fill="#01579b"
+                d="M17.165,17.283c5.217-0.055,9.391,0.283,9,6.011c-0.391,5.728-8.478,5.533-9.391,5.337 c-0.913-0.196-7.826-0.043-7.696-5.337C9.209,18,13.645,17.32,17.165,17.283z"
+              ></path>
+              <path
+                fill="#212121"
+                d="M40.739,37.38c-0.28,1.99-0.69,3.53-1.22,4.62h-2.43c0.25-0.19,1.13-1.11,1.67-4.9 c0.57-4-0.23-11.79-0.93-12.78c-0.4-0.4-2.63-0.8-4.37-0.89l0.1-1.99c1.04,0.05,4.53,0.31,5.71,1.49 C40.689,24.36,41.289,33.53,40.739,37.38z"
+              ></path>
+              <path
+                fill="#81d4fa"
+                d="M10.154,20.201c0.261,2.059-0.196,3.351,2.543,3.546s8.076,1.022,9.402-0.554 c1.326-1.576,1.75-4.365-0.891-5.267C19.336,17.287,12.959,16.251,10.154,20.201z"
+              ></path>
+              <path
+                fill="#212121"
+                d="M17.615,29.677c-0.502,0-0.873-0.03-1.052-0.069c-0.086-0.019-0.236-0.035-0.434-0.06 c-5.344-0.679-8.053-2.784-8.052-6.255c0.001-2.698,1.17-7.238,8.986-7.32l0.181-0.002c3.444-0.038,6.414-0.068,8.272,1.818 c1.173,1.191,1.712,3,1.647,5.53c-0.044,1.688-0.785,3.147-2.144,4.217C22.785,29.296,19.388,29.677,17.615,29.677z M17.086,17.973 c-7.006,0.074-7.008,4.023-7.008,5.321c-0.001,3.109,3.598,3.926,6.305,4.27c0.273,0.035,0.48,0.063,0.601,0.089 c0.563,0.101,4.68,0.035,6.855-1.732c0.865-0.702,1.299-1.57,1.326-2.653c0.051-1.958-0.301-3.291-1.073-4.075 c-1.262-1.281-3.834-1.255-6.825-1.222L17.086,17.973z"
+              ></path>
+              <path
+                fill="#e1f5fe"
+                d="M15.078,19.043c1.957-0.326,5.122-0.529,4.435,1.304c-0.489,1.304-7.185,2.185-7.185,0.652 C12.328,19.467,15.078,19.043,15.078,19.043z"
+              ></path>
+            </svg>
+            <span class="now">শুরু!</span>
+            <span class="play">খেলা</span>
+          </button>
+          <div class="btn-conteiner" id="leaderboardBtn">
+            <a class="btn-content" href="#">
+              <span class="btn-title">লিডারবোর্ড দেখুন</span>
+              <span class="icon-arrow">
+                <svg
+                  width="66px"
+                  height="43px"
+                  viewBox="0 0 66 43"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <g
+                    id="arrow"
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <path
+                      id="arrow-icon-one"
+                      d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z"
+                      fill="#FFFFFF"
+                    ></path>
+                    <path
+                      id="arrow-icon-two"
+                      d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z"
+                      fill="#FFFFFF"
+                    ></path>
+                    <path
+                      id="arrow-icon-three"
+                      d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z"
+                      fill="#FFFFFF"
+                    ></path>
+                  </g>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- From Uiverse.io by Li-Deheng -->
+      </div>
       <!-- Game Screen -->
       <div id="game-screen" class="screen">
-        <h2 id="scoreLevelDisplay"></h2>
+        <div id="scoreLevelDisplay">
+          <div class="player-section">
+            খেলোয়াড়: <span id="playerNameDisplay"></span>
+          </div>
+          <div class="stats-section" id="scoreStateDisplay">
+            স্কোর: <span>0</span> | লেভেল: <span>1</span>
+          </div>
+        </div>
         <h1 id="wordDisplay"></h1>
         <div id="optionsContainer"></div>
-        <div
-          id="gameMessage"
-          style="color: red; font-size: 20px; margin-top: 20px"
-        ></div>
+
+        <div id="gameMessage" class="game-message"></div>
       </div>
 
       <!-- Leaderboard Screen -->
+      <style></style>
       <div id="leaderboard-screen" class="screen">
-        <h1>লিডারবোর্ড</h1>
+        <!-- <h1>লিডারবোর্ড</h1> -->
         <table id="leaderboardTable">
           <tr>
             <th>খেলোয়াড়</th>
@@ -135,7 +653,6 @@
         <button id="backBtn" class="button">শুরুর দিকে ফিরে যাও</button>
       </div>
     </div>
-
     <script>
       let playerName = "";
       let currentScore = 0;
@@ -500,84 +1017,46 @@
           "সংঘাত",
           "অনভিজ্ঞ",
           "প্রবণতা",
-          "ণালী",
-          "নাসিকা",
-          "নাচাল",
-          "নরেন্দ্র",
-          "নম্র",
-          "নাগরিক",
-          "নিবিড়",
-          "নির্দিষ্ট",
-          "নির্ধারিত",
-          "নিষেধ",
-          "নিরাশ্রয়",
-          "নাবালক",
-          "নবী",
-          "নাশক",
-          "নাদান",
-          "নিরবচ্ছিন্ন",
-          "নিবন্ধন",
-          "নিষ্পাপ",
-          "নগণ্য",
-          "নিরলস",
-          "নালিশ",
-          "নরকী",
-          "নাভি",
-          "নিবেদন",
-          "ননদ",
-          "নিমগ্ন",
-          "নিনাদ",
-          "নিষেধাজ্ঞা",
-          "নৈরাশ্য",
-          "নিরঙ্কুশ",
-          "নগরী",
-          "নিয়ন্ত্রণ",
-          "নৌকাবহর",
-          "নাকফুল",
-          "ননজির",
-          "নেলসন",
-          "নিষ্পত্তি",
-          "নির্বাণ",
-          "নির্ভীক",
-          "নৈর্ব্যক্তিক",
-          "নিঃস্ব",
-          "নৈরাজ্য",
-          "নলিনী",
-          "নিম্নতম",
-          "নুড়ি",
-          "নাট্যকলা",
-          "নিবিড়তা",
-          "নাগারিক",
-          "ননসেন্স",
-          "নৃশংস",
-          "নাওয়াল",
-          "নিত্যনতুন",
-          "নৌপরিবহন",
-          "নিখুঁত",
-          "নকশীকাঁথা",
-          "নম্রতা",
-          "নিম্নমুখী",
-          "নকীব",
-          "নয়না",
-          "নিতান্ত",
-          "নজরানা",
-          "নিষেধাপন্ন",
-          "নালায়ক",
-          "নম্রভাব",
-          "নিতব্য",
-          "নাবিক",
-          "নির্লিপ্ত",
-          "নেতৃত্ব",
-          "নিন্দা",
-          "নন্দন",
-          "নোংরা",
-          "নির্বাচন",
-          "নাগল",
-          "নুনু",
-          "নকশাল",
-          "নাবিক",
-          "নিত্যপথ",
-          "নির্মাণ",
+          "অবিচার্য",
+          "অদ্বৈতবাদ",
+          "অপার্থিব",
+          "অভিকর্ষ",
+          "অভিসন্ধি",
+          "অভ্যর্থনা",
+          "অলীকতা",
+          "অসংগতিপূর্ণ",
+          "অসঙ্গতি",
+          "আন্তঃসম্পর্ক",
+          "ইন্দ্রিয়াতীত",
+          "ঔদার্য",
+          "কুশাগ্রবুদ্ধি",
+          "খণ্ডনযোগ্য",
+          "গভীরতা",
+          "জটিলতা",
+          "তদারকিপূর্ণ",
+          "দৃষ্টিগোচর",
+          "নির্বিচার",
+          "পঞ্চেন্দ্রিয়",
+          "প্রতিশ্রুতিবদ্ধতা",
+          "বিস্ময়কর",
+          "বিন্যাসগত",
+          "বৈপরীত্য",
+          "সংবেদনশীলতা",
+          "সংবৃতপ্রবাহ",
+          "সংস্কারাচ্ছন্নতা",
+          "সুচিন্তিত",
+          "সুবিন্যস্ততা",
+          "স্ফুটনাঙ্ক",
+          "হ্রস্বস্বরোচ্চারণ",
+          "উপস্থিতিবিজ্ঞান",
+          "উচ্চারণগত",
+          "গৌণতা",
+          "নিঃসংশয়",
+          "অলংকৃত",
+          "নির্ণায়ক",
+          "অপূর্বতরঙ্গ",
+          "পরিমণ্ডল",
+          "উচ্চারণব্যবস্থা",
         ],
       };
 
@@ -635,6 +1114,7 @@
       const leaderboardScreen = document.getElementById("leaderboard-screen");
       const playerNameInput = document.getElementById("playerNameInput");
       const scoreLevelDisplay = document.getElementById("scoreLevelDisplay");
+      const scoreStateDisplay = document.getElementById("scoreStateDisplay");
       const wordDisplay = document.getElementById("wordDisplay");
       const optionsContainer = document.getElementById("optionsContainer");
       const gameMessage = document.getElementById("gameMessage");
@@ -686,32 +1166,64 @@
         return levelWords[randomIndex];
       }
 
+      const excludedChars = [
+        "া",
+        "ি",
+        "ী",
+        "ু",
+        "ূ",
+        "ৃ",
+        "ে",
+        "ৈ",
+        "ো",
+        "ৌ",
+        "্",
+        "ঁ",
+      ];
+
       function generateOptions(correct) {
         let options = [correct];
+
         while (options.length < 4) {
           const randomIndex = Math.floor(Math.random() * bengaliLetters.length);
           const randomLetter = bengaliLetters[randomIndex];
-          if (!options.includes(randomLetter)) {
+
+          // Ensure it's not already an option and not in the excluded list
+          if (
+            !options.includes(randomLetter) &&
+            !excludedChars.includes(randomLetter)
+          ) {
             options.push(randomLetter);
           }
         }
 
+        // Shuffle the options
         for (let i = options.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [options[i], options[j]] = [options[j], options[i]];
         }
+
         return options;
       }
 
       function nextRound() {
-        scoreLevelDisplay.innerText = `খেলোয়াড়: ${playerName} | স্কোর: ${currentScore} | লেভেল: ${currentLevel}`;
+        scoreLevelDisplay.innerHTML = `
+          <div class="player-section">
+            খেলোয়াড়: <span id="playerNameDisplay">${playerName}</span>
+          </div>
+          <div class="stats-section">
+            স্কোর: <span>${currentScore}</span> | লেভেল: <span>${currentLevel}</span>
+          </div>
+        `;
 
         currentWord = getBengaliWord(currentLevel);
 
-        missingIndex =
-          currentWord.length > 0
-            ? Math.floor(Math.random() * currentWord.length)
-            : 0;
+        // Ensure the missing index is not a diacritic
+        let missingIndex;
+        do {
+          missingIndex = Math.floor(Math.random() * currentWord.length);
+        } while (excludedChars.includes(currentWord.charAt(missingIndex)));
+
         correctLetter = currentWord.charAt(missingIndex);
 
         let displayed = "";
@@ -736,21 +1248,60 @@
           currentScore++;
           currentLevel++;
 
-          gameMessage.style.color = "green";
+          gameMessage.style.cssText = `
+                   color: #008000;
+                   font-size: 20px;
+                   margin-top: 10px;
+                   padding: 18px;
+                   border-radius: 15px;
+                   background: #90EE90;
+                   box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6),
+                              inset 0 2px 4px rgba(255, 255, 255, 0.3);
+                   opacity: 1;
+                   transform: translateY(0);
+                   animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+                   border: 2px solid #008000;
+                   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                   backdrop-filter: blur(5px);
+                   transition: all 0.3s ease-in-out;
+                   letter-spacing: 1px;
+                   font-weight: bold;
+                 `;
           gameMessage.innerText = "সঠিক!";
           setTimeout(() => {
             gameMessage.innerText = "";
-
-            gameMessage.style.color = "red";
+            gameMessage.style.cssText = "";
             nextRound();
-          }, 500);
+          }, 800);
         } else {
-          gameMessage.style.color = "red";
+          gameMessage.style.cssText = `
+                   color: #FF0000;
+                   font-size: 20px;
+                   margin-top: 10px;
+                   padding: 18px;
+                   border-radius: 15px;
+                   background: #FFB6C1;
+                   box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4),
+                              inset 0 2px 4px rgba(255, 255, 255, 0.2);
+                   opacity: 1;
+                   transform: translateY(0);
+                   animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
+                            shake 0.5s ease-in-out;
+                   border: 2px solid #FF0000;
+                   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                   backdrop-filter: blur(5px);
+                   transition: all 0.3s ease-in-out;
+                   letter-spacing: 1px;
+                   font-weight: bold;
+                    `;
           gameMessage.innerText = `ভুল! সঠিক অক্ষর ছিল "${correctLetter}".`;
-          setTimeout(gameOver, 1000);
+
+          setTimeout(() => {
+            gameOver();
+            location.reload();
+          }, 1500);
         }
       }
-
       function gameOver() {
         updateLeaderboard(playerName, currentScore);
         alert(`গেম ওভার! আপনার স্কোর: ${currentScore}`);
@@ -775,6 +1326,7 @@
       }
 
       function showLeaderboard() {
+        // document.querySelector(".container").style.backgroundImage = "none";
         leaderboardTable.innerHTML = `<tr>
           <th>খেলোয়াড়ের নাম</th>
           <th>উচ্চ স্কোর</th>
