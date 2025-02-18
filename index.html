@@ -630,7 +630,7 @@
             খেলোয়াড়: <span id="playerNameDisplay"></span>
           </div>
           <div class="stats-section" id="scoreStateDisplay">
-            স্কোর: <span>0</span> | লেভেল: <span>1</span>
+            স্কোর: <span>0</span> 
           </div>
         </div>
         <h1 id="wordDisplay"></h1>
@@ -1184,6 +1184,44 @@
       function generateOptions(correct) {
         let options = [correct];
 
+        // Ensure both 'জ' and 'য' appear if one of them is missing
+        if (correct === "জ" || correct === "য") {
+          if (!options.includes("জ")) options.push("জ");
+          if (!options.includes("য")) options.push("য");
+        }
+
+        // Ensure 'শ', 'ষ', 'স' all appear if one of them is missing
+        if (correct === "শ" || correct === "ষ" || correct === "স") {
+          if (!options.includes("শ")) options.push("শ");
+          if (!options.includes("ষ")) options.push("ষ");
+          if (!options.includes("স")) options.push("স");
+        }
+
+        // Ensure both 'ণ' and 'ন' appear if one of them is missing
+        if (correct === "ণ" || correct === "ন") {
+          if (!options.includes("ণ")) options.push("ণ");
+          if (!options.includes("ন")) options.push("ন");
+        }
+
+        // Ensure 'র', 'ড়', 'ঢ়' all appear if one of them is missing
+        if (correct === "র" || correct === "ড়" || correct === "ঢ়") {
+          if (!options.includes("র")) options.push("র");
+          if (!options.includes("ড়")) options.push("ড়");
+          if (!options.includes("ঢ়")) options.push("ঢ়");
+        }
+
+        // Ensure both 'ই' and 'ঈ' appear if one of them is missing
+        if (correct === "ই" || correct === "ঈ") {
+          if (!options.includes("ই")) options.push("ই");
+          if (!options.includes("ঈ")) options.push("ঈ");
+        }
+
+        // Ensure both 'উ' and 'ঊ' appear if one of them is missing
+        if (correct === "উ" || correct === "ঊ") {
+          if (!options.includes("উ")) options.push("উ");
+          if (!options.includes("ঊ")) options.push("ঊ");
+        }
+
         while (options.length < 4) {
           const randomIndex = Math.floor(Math.random() * bengaliLetters.length);
           const randomLetter = bengaliLetters[randomIndex];
@@ -1212,17 +1250,44 @@
             খেলোয়াড়: <span id="playerNameDisplay">${playerName}</span>
           </div>
           <div class="stats-section">
-            স্কোর: <span>${currentScore}</span> | লেভেল: <span>${currentLevel}</span>
+            স্কোর: <span>${currentScore}</span> 
           </div>
         `;
 
         currentWord = getBengaliWord(currentLevel);
 
-        // Ensure the missing index is not a diacritic
-        let missingIndex;
-        do {
-          missingIndex = Math.floor(Math.random() * currentWord.length);
-        } while (excludedChars.includes(currentWord.charAt(missingIndex)));
+        // Ensure the missing index is for specific letters if present
+        let missingIndex = -1;
+        const priorityLetters = [
+          "জ",
+          "য",
+          "শ",
+          "ষ",
+          "স",
+          "ণ",
+          "ন",
+          "র",
+          "ড়",
+          "ঢ়",
+          "ই",
+          "ঈ",
+          "উ",
+          "ঊ",
+        ];
+
+        for (let i = 0; i < currentWord.length; i++) {
+          if (priorityLetters.includes(currentWord[i])) {
+            missingIndex = i;
+            break;
+          }
+        }
+
+        // If none of those letters are found, pick a random index excluding diacritics
+        if (missingIndex === -1) {
+          do {
+            missingIndex = Math.floor(Math.random() * currentWord.length);
+          } while (excludedChars.includes(currentWord.charAt(missingIndex)));
+        }
 
         correctLetter = currentWord.charAt(missingIndex);
 
@@ -1272,7 +1337,7 @@
             gameMessage.innerText = "";
             gameMessage.style.cssText = "";
             nextRound();
-          }, 800);
+          }, 2000);
         } else {
           gameMessage.style.cssText = `
                    color: #FF0000;
@@ -1299,7 +1364,7 @@
           setTimeout(() => {
             gameOver();
             location.reload();
-          }, 1500);
+          }, 3000);
         }
       }
       function gameOver() {
